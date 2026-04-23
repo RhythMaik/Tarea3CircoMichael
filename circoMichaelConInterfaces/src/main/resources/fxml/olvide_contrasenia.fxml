@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.effect.DropShadow?>
+
+<AnchorPane stylesheets="@../styles/Styles.css"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.luisdbb.tarea3AD2024base.controller.OlvideContraseniaController">
+
+    <children>
+        <AnchorPane prefHeight="220" prefWidth="300" styleClass="login-box">
+            <children>
+                <Label layoutX="50.0"
+                       layoutY="20.0"
+                       text="Recuperar contraseña"
+                       styleClass="login-title" />
+                <Label fx:id="lblError"
+                       layoutX="50.0"
+                       layoutY="60.0"
+                       prefWidth="200"
+                       wrapText="true"
+                       style="-fx-text-fill: red; -fx-font-size: 12px;" />
+                <TextField fx:id="txtEmail"
+                           layoutX="50.0"
+                           layoutY="90.0"
+                           prefWidth="200"
+                           promptText="Introduce tu email"
+                           styleClass="text-field" />
+                <Button fx:id="btnEnviar"
+                        layoutX="50.0"
+                        layoutY="140.0"
+                        prefHeight="41.0"
+                        prefWidth="91.0"
+                        text="Enviar"
+                        onAction="#onEnviar"
+                        styleClass="btnGreen"
+                        textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                    <effect>
+                        <DropShadow blurType="ONE_PASS_BOX" />
+                    </effect>
+                </Button>
+                <Button fx:id="btnVolver"
+                        layoutX="159.0"
+                        layoutY="140.0"
+                        prefHeight="41.0"
+                        prefWidth="91.0"
+                        text="Volver"
+                        onAction="#onVolver"
+                        styleClass="btnGreen"
+                        textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                    <effect>
+                        <DropShadow blurType="ONE_PASS_BOX" />
+                    </effect>
+                </Button>
+
+            </children>
+
+        </AnchorPane>
+
+    </children>
+
+</AnchorPane>

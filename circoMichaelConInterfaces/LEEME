@@ -1,0 +1,20 @@
+Proyecto preparado para que cumpla los siguientes requerimientos:
+* Java SDK 23
+* MySQL 8.x y una base de datos creada pero vacía de nombre circo_michaelv2 preparada en localhost:3306 con usuario root y sin password
+
+Para lanzar el programa, seleccionar:
+Run As > Run Configurations... > en el apartado Goals escribir clean javafx:run y pulsar Run 
+
+Se arrancará String Boot, se conectará a la BD circo_michaelv2 y aparecerá la GUI de Login. 
+Para poder autenticarse, insertar este script en la BD:
+
+INSERT INTO persona (email, nacionalidad, nombre)
+VALUES ('admin@admin.com', 'ES', 'Administrador');
+
+SET @idAdmin := LAST_INSERT_ID();
+
+INSERT INTO credenciales (id_persona, contrasenia, nombre_usuario, perfil)
+VALUES (@idAdmin, 'admin', 'admin', 'ADMIN');
+
+Así se crean unas credenciales admin/admin que dan acceso a la aplicación.
+Desde ahí, ya se pueden insertar nuevos usuarios.

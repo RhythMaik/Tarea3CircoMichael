@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luisdbb.tarea3AD2024base.controller.LoginController">
+
+    <children>
+        <AnchorPane prefHeight="260" prefWidth="300" styleClass="login-box">
+            <children>
+                <Label alignment="CENTER" layoutX="75.0" layoutY="22.0" styleClass="login-title" text="🔐 Iniciar sesión" />
+                <Label fx:id="lblError" layoutX="59.0" layoutY="62.0" prefWidth="200" style="-fx-text-fill: red; -fx-font-size: 12px;" wrapText="true" />
+                <TextField fx:id="txtUsuario" layoutX="55.0" layoutY="91.0" prefHeight="39.0" prefWidth="209.0" promptText="👤 Usuario" styleClass="text-field" />
+                <PasswordField fx:id="txtContrasenia" layoutX="55.0" layoutY="141.0" onAction="#onLogin" prefHeight="39.0" prefWidth="209.0" promptText="🔑 Contraseña" styleClass="password-field" />
+                <TextField fx:id="txtContraseniaVisible" layoutX="50.0" layoutY="140.0" managed="false" prefWidth="200" promptText="🔑 Contraseña" styleClass="password-field" visible="false" />
+                <CheckBox fx:id="chkMostrarContrasenia" layoutX="86.0" layoutY="189.0" onAction="#onMostrarContrasenia" text="👁 Mostrar contraseña" />
+                <Hyperlink layoutX="77.0" layoutY="207.0" onAction="#onOlvideContrasenia" text="❓ ¿Olvidaste tu contraseña?" />
+                <Button fx:id="btnLogin" layoutX="37.0" layoutY="230.0" onAction="#onLogin" prefHeight="41.0" prefWidth="104.0" styleClass="btnGreen" text="▶ Entrar" textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                    <effect>
+                        <DropShadow blurType="ONE_PASS_BOX" />
+                    </effect>
+                </Button>
+                <Button fx:id="btnVolver" layoutX="159.0" layoutY="230.0" onAction="#onVolver" prefHeight="41.0" prefWidth="104.0" styleClass="btnGreen" text="↩ Volver" textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                    <effect>
+                        <DropShadow blurType="ONE_PASS_BOX" />
+                    </effect>
+                </Button>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

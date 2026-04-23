@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="15" styleClass="panel-box" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luisdbb.tarea3AD2024base.controller.ListaEspectaculosController">
+
+    <Label styleClass="panel-title" text="🎪 Espectáculos del Circo" />
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <TextField fx:id="txtBuscar" onKeyReleased="#onBuscar" prefHeight="39.0" prefWidth="548.0" promptText="🔍 Buscar por nombre..." />
+        <DatePicker fx:id="dpFechaFiltro" onAction="#onFiltrarFecha" promptText="📅 Filtrar por fecha" />
+        <Button onAction="#onLimpiarFiltros" text="Limpiar" />
+    </HBox>
+    <TableView fx:id="tablaEspectaculos" prefHeight="400.0" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" prefWidth="80" text="ID" />
+            <TableColumn fx:id="colNombre" prefWidth="485.0" text="Nombre" />
+            <TableColumn fx:id="colInicio" prefWidth="145.0" text="Fecha Inicio" />
+            <TableColumn fx:id="colFin" prefWidth="145.0" text="Fecha Fin" />
+        </columns>
+    </TableView>
+    <HBox alignment="CENTER" spacing="10">
+        <Button fx:id="btnLogin" onAction="#onLogin" styleClass="action-button" text="🔐 Iniciar sesión" />
+    </HBox>
+
+</VBox>

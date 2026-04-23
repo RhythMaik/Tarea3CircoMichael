@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="850.0" spacing="15" styleClass="panel-box" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luisdbb.tarea3AD2024base.controller.GestionPersonasController">
+
+    <Label fx:id="lblTitulo" styleClass="panel-title" text="👥 Gestión de Personas" />
+    <TableView fx:id="tablaPersonas" prefHeight="403.0" prefWidth="850.0" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colNombre" prefWidth="215.0" text="Nombre" />
+            <TableColumn fx:id="colEmail" prefWidth="407.0" text="Email" />
+            <TableColumn fx:id="colPerfil" prefWidth="226.0" text="Perfil" />
+        </columns>
+    </TableView>
+    <HBox prefHeight="27.0" prefWidth="850.0" spacing="15.0">
+        <children>
+            <Button fx:id="btnCrear" onAction="#onCrear" prefHeight="37.0" prefWidth="142.0" styleClass="action-button" text="Crear Persona" />
+            <Button fx:id="btnEditar" onAction="#onEditar" prefHeight="37.0" prefWidth="126.0" styleClass="action-button" text="Editar Persona" />
+            <Button fx:id="btnEliminar" onAction="#onEliminar" prefHeight="37.0" prefWidth="136.0" styleClass="action-button" text="Eliminar Persona" />
+            <Button fx:id="btnVer" onAction="#onVer" styleClass="action-button" text="Ver detalles" />
+            <Button onAction="#onAyuda" styleClass="action-button" text="Ayuda" />
+            <Button fx:id="btnVolver" onAction="#onVolver" styleClass="cancel-button" text="↩️ Volver">
+            <HBox.margin>
+               <Insets left="80.0" />
+            </HBox.margin></Button>
+        </children>
+    </HBox>
+
+</VBox>

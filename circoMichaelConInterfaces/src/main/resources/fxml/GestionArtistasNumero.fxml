@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox spacing="20"
+      xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.luisdbb.tarea3AD2024base.controller.GestionArtistasNumeroController"
+      stylesheets="@../styles/Styles.css"
+      styleClass="panel-box">
+
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
+        <Label text="🎭 Artistas disponibles" styleClass="panel-title"/>
+        <ListView fx:id="listaDisponibles" VBox.vgrow="ALWAYS"/>
+    </VBox>
+    <VBox spacing="10" alignment="CENTER">
+        <Button text="➕ Añadir →" styleClass="action-button" onAction="#onAnadir"/>
+        <Button text="← Quitar ❌" styleClass="action-button" onAction="#onQuitar"/>
+    </VBox>
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
+        <Label text="🎟️ Artistas asignados" styleClass="panel-title"/>
+        <ListView fx:id="listaAsignados" VBox.vgrow="ALWAYS"/>
+    </VBox>
+    <VBox spacing="10" alignment="BOTTOM_RIGHT">
+        <Button text="❓ Ayuda" styleClass="action-button" onAction="#onAyuda"/>
+        <Button text="↩️ Volver" styleClass="cancel-button" onAction="#onVolver"/>
+    </VBox>
+
+</HBox>
