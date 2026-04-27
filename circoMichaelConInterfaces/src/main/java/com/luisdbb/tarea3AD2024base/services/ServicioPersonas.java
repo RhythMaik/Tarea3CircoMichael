@@ -63,6 +63,8 @@ import jakarta.transaction.Transactional;
  */
 @Service
 public class ServicioPersonas {
+	@Autowired
+	private ServicioLogOperaciones servicioLog;
 
 	@Autowired
 	private PersonaRepository personaRepository;
