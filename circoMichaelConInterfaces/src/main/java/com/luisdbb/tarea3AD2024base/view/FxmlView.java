@@ -214,6 +214,17 @@ public enum FxmlView {
 		public String getFxmlFile() {
 			return "/fxml/FichaArtista.fxml";
 		}
+	},
+	LOGS {
+		@Override
+		public String getTitle() {
+			return "Registro de Operaciones";
+		}
+
+		@Override
+		public String getFxmlFile() {
+			return "/fxml/Logs.fxml";
+		}
 	};
 
 	/**

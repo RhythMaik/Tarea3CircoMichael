@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15"
+      styleClass="panel-box"
+      stylesheets="@../styles/Styles.css"
+      xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.luisdbb.tarea3AD2024base.controller.LogsController">
+
+    <Label styleClass="panel-title" text="📜 Registro de Operaciones del Sistema" />
+    <HBox spacing="10" alignment="CENTER_LEFT">
+
+        <TextField fx:id="txtFiltroUsuario"
+                   promptText="👤 Filtrar por usuario..."
+                   prefWidth="200"
+                   onKeyReleased="#onFiltrar" />
+
+        <ComboBox fx:id="cbFiltroTipo"
+                  promptText="🔧 Tipo operación"
+                  prefWidth="160"
+                  onAction="#onFiltrar" />
+
+        <TextField fx:id="txtFiltroResumen"
+                   promptText="📝 Buscar en resumen..."
+                   prefWidth="300"
+                   onKeyReleased="#onFiltrar" />
+
+        <Button text="Limpiar"
+                onAction="#onLimpiar"
+                styleClass="cancel-button" />
+    </HBox>
+    <TableView fx:id="tablaLogs" VBox.vgrow="ALWAYS">
+        <columns>
+
+            <TableColumn fx:id="colFecha"
+                         text="Fecha/Hora"
+                         prefWidth="160" />
+
+            <TableColumn fx:id="colUsuario"
+                         text="Usuario"
+                         prefWidth="140" />
+
+            <TableColumn fx:id="colTipo"
+                         text="Tipo"
+                         prefWidth="120" />
+
+            <TableColumn fx:id="colResumen"
+                         text="Resumen"
+                         prefWidth="420" />
+
+        </columns>
+    </TableView>
+
+    <!-- BOTONES -->
+    <HBox spacing="10">
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="↩ Volver"
+                onAction="#onVolver"
+                styleClass="cancel-button" />
+    </HBox>
+
+</VBox>

@@ -50,6 +50,8 @@ public class MainLayoutController {
 	private Button btnVerEspectaculos;
 	@FXML
 	private Button btnFichaArtista;
+	@FXML
+	private Button btnLogs;
 
 	/**
 	 * Cargador FXML integrado con Spring.
@@ -119,6 +121,9 @@ public class MainLayoutController {
 
 			btnVerEspectaculos.setVisible(false);
 			btnVerEspectaculos.setManaged(false);
+			
+			btnLogs.setVisible(true);
+			btnLogs.setManaged(true);
 
 			btnFichaArtista.setVisible(false);
 			btnFichaArtista.setManaged(false);
@@ -132,6 +137,9 @@ public class MainLayoutController {
 
 			btnVerEspectaculos.setVisible(false);
 			btnVerEspectaculos.setManaged(false);
+			
+			btnLogs.setVisible(false);
+			btnLogs.setManaged(false);
 
 			btnFichaArtista.setVisible(false);
 			btnFichaArtista.setManaged(false);
@@ -143,6 +151,9 @@ public class MainLayoutController {
 
 			btnEspectaculos.setVisible(false);
 			btnEspectaculos.setManaged(false);
+			
+			btnLogs.setVisible(false);
+			btnLogs.setManaged(false);
 
 			btnVerEspectaculos.setVisible(true);
 			btnVerEspectaculos.setManaged(true);
@@ -189,6 +200,11 @@ public class MainLayoutController {
 	@FXML
 	private void goFichaArtista() {
 		cargarPantalla(FxmlView.FICHA_ARTISTA.getFxmlFile());
+	}
+
+	@FXML
+	private void goLogs() {
+		cargarPantalla(FxmlView.LOGS.getFxmlFile());
 	}
 
 	/**

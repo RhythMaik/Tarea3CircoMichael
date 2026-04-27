@@ -43,6 +43,10 @@
                     styleClass="menu-button"
                     text="🎭 Mi Ficha"
                     visible="false" managed="false"/>
+            <Button fx:id="btnLogs"
+			        text="📜 Ver Logs"
+			        styleClass="menu-button"
+			        onAction="#goLogs" />
             <Button onAction="#logout"
                     prefHeight="39" prefWidth="155"
                     styleClass="cancel-button"
