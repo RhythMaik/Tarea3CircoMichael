@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="15.0" styleClass="panel-box" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luisdbb.tarea3AD2024base.controller.PersonaFormController">
+
+    <Label fx:id="lblTitulo" styleClass="panel-title" text="👤 Crear / Editar Persona" />
+    <Label styleClass="detail-label" text="🏷 Nombre" />
+    <TextField fx:id="txtNombre" styleClass="input-field" />
+    <Label styleClass="detail-label" text="📧 Email" />
+    <TextField fx:id="txtEmail" styleClass="input-field" />
+    <Label styleClass="detail-label" text="🌍 Nacionalidad" />
+    <ComboBox fx:id="cmbNacionalidad" styleClass="input-field" />
+    <Label styleClass="detail-label" text="🛡 Perfil" />
+    <ComboBox fx:id="cmbPerfil" onAction="#onPerfilSeleccionado" styleClass="input-field" />
+    <VBox fx:id="panelCoordinacion" alignment="CENTER" managed="false" spacing="10" visible="false">
+        <Label styleClass="detail-label" text="🎪 Datos de Coordinación" />
+        <CheckBox fx:id="chkSenior" onAction="#onSeniorSeleccionado" text="Es senior" />
+        <DatePicker fx:id="dpFechaSenior" managed="false" promptText="📅 Fecha desde" visible="false" />
+    </VBox>
+    <VBox fx:id="panelArtista" alignment="CENTER" managed="false" spacing="10" visible="false">
+        <Label styleClass="detail-label" text="🎭 Datos de Artista" />
+        <TextField fx:id="txtApodo" promptText="Apodo (opcional)" styleClass="input-field" />
+        <Label styleClass="detail-label" text="✨ Especialidades" />
+        <VBox fx:id="panelChecksEspecialidades" spacing="5">
+            <CheckBox fx:id="chkAcrobacia" text="ACROBACIA" />
+            <CheckBox fx:id="chkHumor" text="HUMOR" />
+            <CheckBox fx:id="chkMagia" text="MAGIA" />
+            <CheckBox fx:id="chkEquilibrismo" text="EQUILIBRISMO" />
+            <CheckBox fx:id="chkMalabarismo" text="MALABARISMO" />
+        </VBox>
+    </VBox>
+    <Label styleClass="detail-label" text="🔑 Contraseña (solo al crear)" />
+    <PasswordField fx:id="txtContrasenia" styleClass="input-field" />
+    <HBox alignment="CENTER" spacing="10">
+        <Button onAction="#onGuardar" styleClass="action-button" text="💾 Guardar" />
+        <Button onAction="#onCancelar" styleClass="cancel-button" text="↩ Cancelar" />
+    </HBox>
+
+</VBox>

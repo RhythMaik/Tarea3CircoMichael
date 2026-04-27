@@ -1,0 +1,308 @@
+/* ===========================================================
+   CIRCO MODERNO PREMIUM — ESTILO COMPLETO (TENIA UN CSS ANTERIOR PERO EL ESTILO ERA FEISIMO)
+   =========================================================== */
+
+/* ===========================================================
+   PALETA
+   -----------------------------------------------------------
+   Fondo principal: #121212
+   Paneles: #1a1a1a
+   Bordes: #2b2b2b
+   Dorado circo: #d4a017
+   Rojo telon: #b83232
+   Texto principal: #e6e6e6
+   Texto secundario: #bfbfbf
+   =========================================================== */
+
+
+/* ===========================
+   FONDO GENERAL
+   =========================== */
+.anchor-pane, .root {
+    -fx-background-color: #121212;
+}
+
+
+/* ===========================
+   HEADER
+   =========================== */
+.header-bar {
+    -fx-background-color: #1a1a1a;
+    -fx-padding: 15 20;
+    -fx-border-color: #2b2b2b;
+    -fx-border-width: 0 0 1 0;
+}
+
+.header-title {
+    -fx-text-fill: #e6e6e6;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+
+/* ===========================
+   TARJETAS / CONTENEDORES
+   =========================== */
+.login-box,
+.menu-box,
+.panel-box,
+.form-box,
+.detail-box {
+    -fx-background-color: #1a1a1a;
+    -fx-background-radius: 14;
+    -fx-padding: 25;
+    -fx-spacing: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 12, 0.3, 0, 0);
+}
+
+
+/* ===========================
+   TÍTULOS
+   =========================== */
+.login-title,
+.menu-title,
+.panel-title,
+.form-title,
+.detail-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d4a017;
+    -fx-effect: dropshadow(gaussian, rgba(212,160,23,0.35), 10, 0.3, 0, 0);
+}
+
+.menu-title {
+    -fx-font-size: 24px;
+}
+
+
+/* ===========================
+   LABELS
+   =========================== */
+.form-label,
+.detail-label {
+    -fx-text-fill: #bfbfbf;
+    -fx-font-size: 14px;
+}
+
+.detail-value {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+
+/* ===========================
+   CAMPOS DE TEXTO / COMBOBOX
+   =========================== */
+.text-field,
+.password-field,
+.form-field,
+.combo-box,
+.combo-box-base {
+    -fx-background-color: #1f1f1f;
+    -fx-text-fill: #e6e6e6;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 10;
+    -fx-border-color: #b83232; /* Rojo telon */
+}
+
+.text-field:focused,
+.password-field:focused,
+.form-field:focused,
+.combo-box:focused,
+.combo-box-base:focused {
+    -fx-border-color: #d4a017; /* Dorado */
+    -fx-effect: dropshadow(gaussian, rgba(212,160,23,0.35), 10, 0.3, 0, 0);
+}
+
+/* ComboBox popup */
+.combo-box .list-cell {
+    -fx-background-color: #1f1f1f;
+    -fx-text-fill: #e6e6e6;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: #292929;
+}
+
+
+/* ===========================
+   CHECKBOX
+   =========================== */
+.check-box {
+    -fx-text-fill: #e6e6e6;
+}
+
+.check-box .box {
+    -fx-background-color: #1f1f1f;
+    -fx-border-color: #b83232;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #d4a017;
+    -fx-border-color: #d4a017;
+}
+
+
+/* ===========================
+   DATEPICKER
+   =========================== */
+.date-picker {
+    -fx-background-color: #1f1f1f;
+    -fx-border-color: #b83232;
+    -fx-text-fill: #e6e6e6;
+}
+
+.date-picker .text-field {
+    -fx-background-color: #1f1f1f;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #292929;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #333;
+}
+
+
+/* ===========================
+   BOTONES
+   =========================== */
+
+/* Botón principal */
+.action-button,
+.btnGreen {
+    -fx-background-color: linear-gradient(to bottom, #d4a017, #b88a12);
+    -fx-background-radius: 10;
+    -fx-text-fill: #000;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(212,160,23,0.35), 12, 0.3, 0, 0);
+}
+
+.action-button:hover,
+.btnGreen:hover {
+    -fx-background-color: linear-gradient(to bottom, #e8b72a, #c99c1a);
+}
+
+/* Botón secundario */
+.cancel-button {
+    -fx-background-color: #1f1f1f;
+    -fx-background-radius: 10;
+    -fx-text-fill: #cccccc;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-border-color: #444;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #262626;
+}
+
+
+/* ===========================
+   BOTONES DEL MENÚ
+   =========================== */
+.menu-button {
+    -fx-background-color: #181818;
+    -fx-background-radius: 12;
+    -fx-text-fill: #d4a017;
+    -fx-font-size: 15px;
+    -fx-padding: 12 20;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(212,160,23,0.18), 6, 0.25, 0, 0);
+}
+
+.menu-button:hover {
+    -fx-background-color: #222;
+}
+
+.menu-button:pressed {
+    -fx-background-color: #111;
+}
+
+
+/* ===========================
+   TABLAS
+   =========================== */
+.table-view {
+    -fx-background-color: #1a1a1a;
+    -fx-control-inner-background: #1a1a1a;
+    -fx-border-color: #2b2b2b;
+}
+
+.table-row-cell {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #e6e6e6;
+}
+
+.table-row-cell:filled:hover {
+    -fx-background-color: #222;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #b83232; /* Rojo telon */
+    -fx-text-fill: white;
+}
+
+.table-cell {
+    -fx-text-fill: #e6e6e6;
+}
+
+.table-cell:selected {
+    -fx-text-fill: white;
+}
+
+/* Encabezados */
+.table-view .column-header-background {
+    -fx-background-color: #1f1f1f;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #d4a017;
+    -fx-font-weight: bold;
+}
+
+
+/* ===========================
+   LISTVIEW
+   =========================== */
+.list-view {
+    -fx-background-color: #1a1a1a;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #e6e6e6;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #222;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #b83232;
+    -fx-text-fill: white;
+}
+
+
+/* ===========================
+   CONTENEDORES
+   =========================== */
+.vbox, .hbox, .pane, .stack-pane {
+    -fx-background-color: #121212;
+}
+
+.content-area {
+    -fx-padding: 30;
+}
+
+.panel-box, .form-box, .detail-box {
+    -fx-max-width: 900;
+    -fx-pref-width: 900;
+    -fx-alignment: TOP_CENTER;
+}

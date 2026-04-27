@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="15"
+      styleClass="detail-box"
+      stylesheets="@../styles/Styles.css"
+      xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.luisdbb.tarea3AD2024base.controller.FichaArtistaController">
+
+    <Label styleClass="detail-title" text="🎭 Mi Ficha de Artista" />
+    <Label styleClass="detail-label" text="👤 Nombre" />
+    <Label fx:id="lblNombre" styleClass="detail-value" />
+    <Label styleClass="detail-label" text="📧 Email" />
+    <Label fx:id="lblEmail" styleClass="detail-value" />
+    <Label styleClass="detail-label" text="🌍 Nacionalidad" />
+    <Label fx:id="lblNacionalidad" styleClass="detail-value" />
+    <Label styleClass="detail-label" text="🏷️ Apodo" />
+    <Label fx:id="lblApodo" styleClass="detail-value" />
+    <Label styleClass="detail-label" text="✨ Especialidades" />
+    <Label fx:id="lblEspecialidades" styleClass="detail-value" wrapText="true" />
+    <Label styleClass="detail-label" text="🕓 Trayectoria" />
+    <VBox fx:id="panelTrayectoria" alignment="TOP_CENTER" spacing="8" />
+    <Button fx:id="btnExportarXML"
+            text="📄 Exportar ficha XML"
+            styleClass="action-button"
+            onAction="#onExportarXML" />
+
+</VBox>

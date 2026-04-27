@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luisdbb.tarea3AD2024base.controller.MenuPrincipalController">
+
+    <children>
+        <VBox alignment="CENTER" prefHeight="475.0" prefWidth="704.0" styleClass="menu-box">
+            <Label fx:id="lblBienvenida" styleClass="menu-title" text="OG THING WTHHHHH" />
+            <Button fx:id="btnPersonas" onAction="#onPersonas" styleClass="menu-button" text="👥 Gestionar Personas" />
+            <Button fx:id="btnEspectaculos" onAction="#onEspectaculos" styleClass="menu-button" text="🎪 Gestionar Espectáculos" />
+            <Button fx:id="btnNumeros" onAction="#onNumeros" styleClass="menu-button" text="🎬 Gestionar Números" />
+            <Button fx:id="btnArtistas" onAction="#onArtistas" styleClass="menu-button" text="🎭 Gestionar Artistas" />
+            <Button fx:id="btnVerEspectaculos" onAction="#onVerEspectaculos" styleClass="menu-button" text="👁 Ver Espectáculos" />
+            <Button fx:id="btnCerrarSesion" onAction="#onCerrarSesion" styleClass="menu-button" text="🚪 Cerrar Sesión" />
+        </VBox>
+    </children>
+
+</AnchorPane>
