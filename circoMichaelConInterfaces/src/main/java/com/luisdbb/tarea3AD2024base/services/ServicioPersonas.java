@@ -195,7 +195,7 @@ public class ServicioPersonas {
 	@Transactional
 	public Persona registrarPersona(String nombre, String email, String nacionalidad, String usuario,
 			String contrasenia, Perfiles perfil, boolean senior, LocalDate fechaSenior, String apodo,
-			List<Especialidad> especialidades) {
+			List<Especialidad> especialidades, String usuarioActual) {
 
 		if (!emailValido(email))
 			throw new IllegalArgumentException("Email inválido");
@@ -232,6 +232,9 @@ public class ServicioPersonas {
 			artistaRepository.save(a);
 		}
 
+		// ===== EL LOG YE ESTO =====
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.NUEVO, "Insertada Persona id " + persona.getId());
+
 		return persona;
 	}
 
@@ -245,8 +248,15 @@ public class ServicioPersonas {
 	 * @param persona persona a modificar
 	 * @return persona actualizada
 	 */
-	public Persona actualizarPersona(Persona persona) {
-		return personaRepository.save(persona);
+	public Persona actualizarPersona(Persona persona, String usuarioActual) {
+
+		Persona guardada = personaRepository.save(persona);
+
+		// ===== NUEVO LO DEL LOG WAZAAAA =====
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.ACTUALIZACION,
+				"Actualizada Persona id " + guardada.getId());
+
+		return guardada;
 	}
 
 	/**
@@ -255,11 +265,20 @@ public class ServicioPersonas {
 	 * @param persona     persona asociada
 	 * @param nuevoPerfil nuevo perfil asignado
 	 */
-	public void actualizarPerfil(Persona persona, Perfiles nuevoPerfil) {
-		Credenciales cred = credencialesRepository.findByIdPersona(persona.getId());
-		cred.setPerfil(nuevoPerfil);
-		credencialesRepository.save(cred);
+	public void actualizarPerfil(Persona persona, Perfiles nuevoPerfil, String usuarioActual) {
+
+	    Credenciales cred = credencialesRepository.findByIdPersona(persona.getId());
+	    cred.setPerfil(nuevoPerfil);
+	    credencialesRepository.save(cred);
+
+	    // ===== LOG =====
+	    servicioLog.registrarOperacion(
+	            usuarioActual,
+	            TipoOperacion.ACTUALIZACION,
+	            "Actualizado perfil Persona id " + persona.getId() + " a " + nuevoPerfil
+	    );
 	}
+
 
 	/**
 	 * Actualiza el nombre de usuario de una persona.
@@ -267,13 +286,18 @@ public class ServicioPersonas {
 	 * @param persona      persona asociada
 	 * @param nuevoUsuario nuevo nombre de usuario
 	 */
-	public void actualizarUsuario(Persona persona, String nuevoUsuario) {
+	public void actualizarUsuario(Persona persona, String nuevoUsuario, String usuarioActual) {
+
 		if (!usuarioValido(nuevoUsuario))
 			throw new IllegalArgumentException("Usuario inválido");
 
 		Credenciales cred = credencialesRepository.findByIdPersona(persona.getId());
 		cred.setNombreUsuario(nuevoUsuario);
 		credencialesRepository.save(cred);
+
+		// ===== LOG =====
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.ACTUALIZACION,
+				"Actualizado nombreUsuario Persona id " + persona.getId());
 	}
 
 	/**
@@ -285,12 +309,19 @@ public class ServicioPersonas {
 	 * @param nuevoEmail nuevo email
 	 * @return persona actualizada
 	 */
-	public Persona actualizarEmail(Persona persona, String nuevoEmail) {
+	public Persona actualizarEmail(Persona persona, String nuevoEmail, String usuarioActual) {
+
 		if (!emailValido(nuevoEmail))
 			throw new IllegalArgumentException("Email invalido");
 
 		persona.setEmail(nuevoEmail);
-		return personaRepository.save(persona);
+		Persona guardada = personaRepository.save(persona);
+
+		// ===== LOG =====
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.ACTUALIZACION,
+				"Actualizado email Persona id " + guardada.getId());
+
+		return guardada;
 	}
 
 	/**
@@ -302,12 +333,19 @@ public class ServicioPersonas {
 	 * @param nuevaNac nuevo código de país
 	 * @return persona actualizada
 	 */
-	public Persona actualizarNacionalidad(Persona persona, String nuevaNac) {
+	public Persona actualizarNacionalidad(Persona persona, String nuevaNac, String usuarioActual) {
+
 		if (!nacionalidadValida(nuevaNac))
 			throw new IllegalArgumentException("Nacionalidad invalida segun paises.xml");
 
 		persona.setNacionalidad(nuevaNac);
-		return personaRepository.save(persona);
+		Persona guardada = personaRepository.save(persona);
+
+		// ===== LOG =====
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.ACTUALIZACION,
+				"Actualizada nacionalidad Persona id " + guardada.getId());
+
+		return guardada;
 	}
 
 	/**
@@ -316,13 +354,18 @@ public class ServicioPersonas {
 	 * @param persona   persona asociada
 	 * @param nuevaPass nueva contraseña
 	 */
-	public void actualizarContrasenia(Persona persona, String nuevaPass) {
+	public void actualizarContrasenia(Persona persona, String nuevaPass, String usuarioActual) {
+
 		if (!contraseniaValida(nuevaPass))
 			throw new IllegalArgumentException("Contrasenia invalida");
 
 		Credenciales cred = credencialesRepository.findByIdPersona(persona.getId());
 		cred.setContrasenia(nuevaPass);
 		credencialesRepository.save(cred);
+
+		// ===== LOG =====
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.ACTUALIZACION,
+				"Actualizada contraseña Persona id " + persona.getId());
 	}
 
 	// ============================================================
@@ -439,24 +482,24 @@ public class ServicioPersonas {
 	 * @param idPersona identificador de la persona a eliminar
 	 */
 	@Transactional
-	public void delete(Integer idPersona) {
+	public void delete(Integer idPersona, String usuarioActual) {
 
 		Credenciales cred = credencialesRepository.findByIdPersona(idPersona);
-		if (cred != null) {
+		if (cred != null)
 			credencialesRepository.delete(cred);
-		}
 
 		Artista artista = artistaRepository.findByIdPersona(idPersona);
-		if (artista != null) {
+		if (artista != null)
 			artistaRepository.delete(artista);
-		}
 
 		Coordinacion coord = coordinacionRepository.findByIdPersona(idPersona);
-		if (coord != null) {
+		if (coord != null)
 			coordinacionRepository.delete(coord);
-		}
 
 		personaRepository.deleteById(idPersona);
+
+		// ===== LOG =====
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.BORRADO, "Borrada Persona id " + idPersona);
 	}
 
 	// ============================================================

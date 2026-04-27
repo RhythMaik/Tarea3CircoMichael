@@ -224,7 +224,7 @@ public class Menus {
 
 			switch (op) {
 			case 1:
-				registrarPersona(leer);
+				registrarPersona(leer, sesion);
 				break;
 			case 2:
 
@@ -773,7 +773,7 @@ public class Menus {
 	/**
 	 * Permite registrar una nueva persona desde el menu ADMIN.
 	 */
-	private void registrarPersona(Scanner leer) {
+	private void registrarPersona(Scanner leer, Sesion sesion) {
 
 		System.out.println("=== REGISTRO DE PERSONA ===");
 
@@ -803,18 +803,13 @@ public class Menus {
 		Perfiles perfil;
 
 		switch (opPerfil) {
-		case 1:
-			perfil = Perfiles.ADMIN;
-			break;
-		case 2:
-			perfil = Perfiles.COORDINACION;
-			break;
-		case 3:
-			perfil = Perfiles.ARTISTA;
-			break;
-		default:
+		case 1 -> perfil = Perfiles.ADMIN;
+		case 2 -> perfil = Perfiles.COORDINACION;
+		case 3 -> perfil = Perfiles.ARTISTA;
+		default -> {
 			System.out.println("Perfil invalido.");
 			return;
+		}
 		}
 
 		boolean senior = false;
@@ -831,7 +826,8 @@ public class Menus {
 
 		try {
 			servicioPersonas.registrarPersona(nombre, email, nacionalidad, usuario, contrasenia, perfil, senior,
-					fechaSenior, apodo, especialidades);
+					fechaSenior, apodo, especialidades, sesion.getNombrePersona()
+			);
 
 			System.out.println("Persona registrada correctamente.");
 

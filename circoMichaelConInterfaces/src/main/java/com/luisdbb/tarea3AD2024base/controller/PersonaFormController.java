@@ -46,6 +46,7 @@ import com.luisdbb.tarea3AD2024base.modelo.Credenciales;
 import com.luisdbb.tarea3AD2024base.modelo.Especialidad;
 import com.luisdbb.tarea3AD2024base.modelo.Perfiles;
 import com.luisdbb.tarea3AD2024base.modelo.Persona;
+import com.luisdbb.tarea3AD2024base.modelo.Sesion;
 import com.luisdbb.tarea3AD2024base.repositorios.ArtistaRepository;
 import com.luisdbb.tarea3AD2024base.repositorios.CoordinacionRepository;
 import com.luisdbb.tarea3AD2024base.services.ServicioNavegacion;
@@ -59,6 +60,9 @@ import javafx.scene.layout.VBox;
 
 @Controller
 public class PersonaFormController implements Initializable {
+
+	@Autowired
+	private Sesion sesion;
 
 	/**
 	 * Servicio de negocio para gestionar personas, credenciales y perfiles.
@@ -85,8 +89,8 @@ public class PersonaFormController implements Initializable {
 	private ArtistaRepository artistaRepository;
 
 	/**
-	 * Persona actualmente en edición. Si es null, el formulario funciona en
-	 * modo creación.
+	 * Persona actualmente en edición. Si es null, el formulario funciona en modo
+	 * creación.
 	 */
 	public static Persona personaEnEdicion;
 
@@ -129,8 +133,7 @@ public class PersonaFormController implements Initializable {
 	private CheckBox chkMalabarismo;
 
 	/**
-	 * Inicializa la vista cargando países, perfiles y datos si se está
-	 * editando.
+	 * Inicializa la vista cargando países, perfiles y datos si se está editando.
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -146,8 +149,7 @@ public class PersonaFormController implements Initializable {
 	}
 
 	/**
-	 * Oculta los paneles de datos profesionales hasta que se seleccione un
-	 * perfil.
+	 * Oculta los paneles de datos profesionales hasta que se seleccione un perfil.
 	 */
 	private void ocultarPaneles() {
 		panelCoordinacion.setVisible(false);
@@ -195,21 +197,17 @@ public class PersonaFormController implements Initializable {
 	private List<String> cargarPaises() {
 		List<String> lista = new ArrayList<>();
 
-		try (InputStream is = getClass().getClassLoader()
-				.getResourceAsStream("paises.xml")) {
+		try (InputStream is = getClass().getClassLoader().getResourceAsStream("paises.xml")) {
 
-			DocumentBuilder db = DocumentBuilderFactory.newInstance()
-					.newDocumentBuilder();
+			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = db.parse(is);
 
 			NodeList paises = doc.getElementsByTagName("pais");
 
 			for (int i = 0; i < paises.getLength(); i++) {
 
-				String id = paises.item(i).getChildNodes().item(1)
-						.getTextContent().trim();
-				String nombre = paises.item(i).getChildNodes().item(3)
-						.getTextContent().trim();
+				String id = paises.item(i).getChildNodes().item(1).getTextContent().trim();
+				String nombre = paises.item(i).getChildNodes().item(3).getTextContent().trim();
 
 				lista.add(id + " - " + nombre);
 			}
@@ -247,8 +245,7 @@ public class PersonaFormController implements Initializable {
 		// Datos profesionales según perfil
 		if (cred.getPerfil() == Perfiles.COORDINACION) {
 
-			Coordinacion c = coordinacionRepository
-					.findByIdPersona(personaEnEdicion.getId());
+			Coordinacion c = coordinacionRepository.findByIdPersona(personaEnEdicion.getId());
 
 			if (c != null) {
 				panelCoordinacion.setVisible(true);
@@ -266,8 +263,7 @@ public class PersonaFormController implements Initializable {
 
 		if (cred.getPerfil() == Perfiles.ARTISTA) {
 
-			Artista a = artistaRepository
-					.findByIdPersonaConEspecialidades(personaEnEdicion.getId());
+			Artista a = artistaRepository.findByIdPersonaConEspecialidades(personaEnEdicion.getId());
 
 			if (a != null) {
 				panelArtista.setVisible(true);
@@ -295,17 +291,17 @@ public class PersonaFormController implements Initializable {
 	 * corresponda. Este método implementa toda la lógica del caso de uso CU3:
 	 *
 	 * CU3A – Crear persona: - Requiere contraseña obligatoria - Genera
-	 * automáticamente un nombre de usuario normalizado - Crea la entidad
-	 * Persona y su perfil asociado - Crea entidades profesionales según el
-	 * perfil (Coordinación o Artista)
+	 * automáticamente un nombre de usuario normalizado - Crea la entidad Persona y
+	 * su perfil asociado - Crea entidades profesionales según el perfil
+	 * (Coordinación o Artista)
 	 *
 	 * CU3B – Editar persona: - Actualiza datos personales (nombre, email,
-	 * nacionalidad) - Actualiza datos profesionales según el perfil - Mantiene
-	 * la contraseña existente
+	 * nacionalidad) - Actualiza datos profesionales según el perfil - Mantiene la
+	 * contraseña existente
 	 *
-	 * Validaciones aplicadas: - Todos los campos obligatorios deben estar
-	 * completos - Si el perfil es COORDINACIÓN y es senior → fecha obligatoria
-	 * - Si el perfil es ARTISTA → especialidades opcionales, apodo opcional
+	 * Validaciones aplicadas: - Todos los campos obligatorios deben estar completos
+	 * - Si el perfil es COORDINACIÓN y es senior → fecha obligatoria - Si el perfil
+	 * es ARTISTA → especialidades opcionales, apodo opcional
 	 *
 	 * Tras completar la operación, vuelve a la pantalla de gestión de personas.
 	 */
@@ -317,8 +313,7 @@ public class PersonaFormController implements Initializable {
 		String nacionalidad = cmbNacionalidad.getValue();
 		Perfiles perfil = cmbPerfil.getValue();
 
-		if (nombre.isBlank() || email.isBlank() || nacionalidad == null
-				|| perfil == null) {
+		if (nombre.isBlank() || email.isBlank() || nacionalidad == null || perfil == null) {
 			mostrarError("Rellena todos los campos obligatorios.");
 			return;
 		}
@@ -327,8 +322,7 @@ public class PersonaFormController implements Initializable {
 		// VALIDACIÓN DE NOMBRE SIN TILDES, Ñ NI ESPACIOS
 		// ============================================================
 		if (!nombre.matches("^[A-Za-z]+$")) {
-			mostrarError(
-					"El nombre solo puede contener letras sin tildes, sin ñ y sin espacios.");
+			mostrarError("El nombre solo puede contener letras sin tildes, sin ñ y sin espacios.");
 			return;
 		}
 
@@ -386,9 +380,9 @@ public class PersonaFormController implements Initializable {
 			String usuario = nombre.toLowerCase();
 
 			try {
-				servicioPersonas.registrarPersona(nombre, email, idPais,
-						usuario, pass, perfil, senior, fechaSenior, apodo,
-						especialidades);
+				servicioPersonas.registrarPersona(nombre, email, idPais, usuario, pass, perfil, senior, fechaSenior,
+						apodo, especialidades, sesion.getNombrePersona());
+
 			} catch (Exception e) {
 				mostrarError(e.getMessage());
 				return;
@@ -403,12 +397,11 @@ public class PersonaFormController implements Initializable {
 			personaEnEdicion.setEmail(email);
 			personaEnEdicion.setNacionalidad(idPais);
 
-			servicioPersonas.actualizarPersona(personaEnEdicion);
+			servicioPersonas.actualizarPersona(personaEnEdicion, sesion.getNombrePersona());
 
 			// Actualizar datos profesionales
 			if (perfil == Perfiles.COORDINACION) {
-				Coordinacion c = coordinacionRepository
-						.findByIdPersona(personaEnEdicion.getId());
+				Coordinacion c = coordinacionRepository.findByIdPersona(personaEnEdicion.getId());
 				if (c == null)
 					c = new Coordinacion(personaEnEdicion, senior, fechaSenior);
 				else {
@@ -419,8 +412,7 @@ public class PersonaFormController implements Initializable {
 			}
 
 			if (perfil == Perfiles.ARTISTA) {
-				Artista a = artistaRepository
-						.findByIdPersona(personaEnEdicion.getId());
+				Artista a = artistaRepository.findByIdPersona(personaEnEdicion.getId());
 				if (a == null)
 					a = new Artista(personaEnEdicion, apodo, especialidades);
 				else {
@@ -430,7 +422,7 @@ public class PersonaFormController implements Initializable {
 				artistaRepository.save(a);
 			}
 
-			servicioPersonas.actualizarPerfil(personaEnEdicion, perfil);
+			servicioPersonas.actualizarPerfil(personaEnEdicion, perfil, sesion.getNombrePersona());
 		}
 
 		personaEnEdicion = null;

@@ -25,6 +25,7 @@ import org.springframework.stereotype.Controller;
 
 import com.luisdbb.tarea3AD2024base.modelo.Credenciales;
 import com.luisdbb.tarea3AD2024base.modelo.Persona;
+import com.luisdbb.tarea3AD2024base.modelo.Sesion;
 import com.luisdbb.tarea3AD2024base.repositorios.CredencialesRepository;
 import com.luisdbb.tarea3AD2024base.services.ServicioPersonas;
 import com.luisdbb.tarea3AD2024base.services.ServicioNavegacion;
@@ -48,6 +49,9 @@ public class GestionPersonasController implements Initializable {
 	 */
 	@Autowired
 	private ServicioPersonas servicioPersonas;
+	
+	@Autowired
+	private Sesion sesion;
 
 	/**
 	 * Repositorio para obtener el perfil asociado a cada persona.
@@ -160,7 +164,7 @@ public class GestionPersonasController implements Initializable {
 			return;
 		}
 
-		servicioPersonas.delete(seleccionada.getId());
+		servicioPersonas.delete(seleccionada.getId(), sesion.getNombrePersona());
 		cargarPersonas();
 		mostrarInfo("Eliminado", "La persona ha sido eliminada correctamente.");
 	}
