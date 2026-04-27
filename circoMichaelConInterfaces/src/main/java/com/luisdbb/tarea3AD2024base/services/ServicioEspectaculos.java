@@ -37,6 +37,8 @@ import jakarta.transaction.Transactional;
  */
 @Service
 public class ServicioEspectaculos {
+	@Autowired
+	private ServicioLogOperaciones servicioLog;
 
 	/**
 	 * Repositorio para acceder a datos de espectáculos.
@@ -110,18 +112,18 @@ public class ServicioEspectaculos {
 	 */
 	@Transactional
 	public List<Espectaculo> findAll() {
-	    List<Espectaculo> lista = espectaculoRepository.findAll();
+		List<Espectaculo> lista = espectaculoRepository.findAll();
 
-	    // Metodo con calzador para forzar la carga que si no me tengo que meter de nuevo con los repositorios
-	    for (Espectaculo e : lista) {
-	        if (e.getNumeros() != null) {
-	            e.getNumeros().size(); 
-	        }
-	    }
+		// Metodo con calzador para forzar la carga que si no me tengo que meter de
+		// nuevo con los repositorios
+		for (Espectaculo e : lista) {
+			if (e.getNumeros() != null) {
+				e.getNumeros().size();
+			}
+		}
 
-	    return lista;
+		return lista;
 	}
-
 
 	/**
 	 * Busca un espectáculo por su identificador.
@@ -148,8 +150,12 @@ public class ServicioEspectaculos {
 	 *
 	 * @param id identificador del espectáculo
 	 */
-	public void delete(Integer id) {
+	public void delete(Integer id, String usuarioActual) {
+
 		espectaculoRepository.deleteById(id);
+
+		// LOG
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.BORRADO, "Borrado Espectaculo id " + id);
 	}
 
 	// ============================================================
@@ -165,7 +171,8 @@ public class ServicioEspectaculos {
 	 * @param personaCoord persona que actuará como coordinador
 	 * @return espectáculo creado
 	 */
-	public Espectaculo crearEspectaculo(String nombre, LocalDate inicio, LocalDate fin, Persona personaCoord) {
+	public Espectaculo crearEspectaculo(String nombre, LocalDate inicio, LocalDate fin, Persona personaCoord,
+			String usuarioActual) {
 
 		if (!nombreValido(nombre))
 			throw new IllegalArgumentException("Nombre inválido");
@@ -178,8 +185,12 @@ public class ServicioEspectaculos {
 			throw new IllegalArgumentException("La persona no es coordinador");
 
 		Espectaculo esp = new Espectaculo(nombre, inicio, fin, coordinacion);
+		espectaculoRepository.save(esp);
 
-		return espectaculoRepository.save(esp);
+		// LOG
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.NUEVO, "Creado Espectaculo id " + esp.getId());
+
+		return esp;
 	}
 
 	// ============================================================
@@ -193,12 +204,19 @@ public class ServicioEspectaculos {
 	 * @param nuevoNombre nuevo nombre
 	 * @return espectáculo actualizado
 	 */
-	public Espectaculo actualizarNombre(Espectaculo esp, String nuevoNombre) {
+	public Espectaculo actualizarNombre(Espectaculo esp, String nuevoNombre, String usuarioActual) {
+
 		if (!nombreValido(nuevoNombre))
 			throw new IllegalArgumentException("Nombre inválido");
 
 		esp.setNombre(nuevoNombre);
-		return espectaculoRepository.save(esp);
+		Espectaculo guardado = espectaculoRepository.save(esp);
+
+		// LOG
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.ACTUALIZACION,
+				"Actualizado nombre Espectaculo id " + esp.getId());
+
+		return guardado;
 	}
 
 	/**
@@ -209,13 +227,20 @@ public class ServicioEspectaculos {
 	 * @param fin    nueva fecha de fin
 	 * @return espectáculo actualizado
 	 */
-	public Espectaculo actualizarFechas(Espectaculo esp, LocalDate inicio, LocalDate fin) {
+	public Espectaculo actualizarFechas(Espectaculo esp, LocalDate inicio, LocalDate fin, String usuarioActual) {
+
 		if (!fechasValidas(inicio, fin))
 			throw new IllegalArgumentException("Fechas inválidas");
 
 		esp.setFechaInicio(inicio);
 		esp.setFechaFin(fin);
-		return espectaculoRepository.save(esp);
+		Espectaculo guardado = espectaculoRepository.save(esp);
+
+		// LOG
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.ACTUALIZACION,
+				"Actualizadas fechas Espectaculo id " + esp.getId());
+
+		return guardado;
 	}
 
 	/**
@@ -226,7 +251,7 @@ public class ServicioEspectaculos {
 	 * @return espectáculo actualizado
 	 */
 	@Transactional
-	public Espectaculo actualizarCoordinador(Espectaculo espDetached, Integer idPersona) {
+	public Espectaculo actualizarCoordinador(Espectaculo espDetached, Integer idPersona, String usuarioActual) {
 
 		Espectaculo esp = espectaculoRepository.findById(espDetached.getId())
 				.orElseThrow(() -> new IllegalArgumentException("Espectáculo no encontrado"));
@@ -238,8 +263,13 @@ public class ServicioEspectaculos {
 			throw new IllegalArgumentException("La persona no es coordinador");
 
 		esp.setCoordinador(coordinacion);
+		Espectaculo guardado = espectaculoRepository.save(esp);
 
-		return espectaculoRepository.save(esp);
+		// LOG
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.ACTUALIZACION,
+				"Actualizado coordinador Espectaculo id " + esp.getId());
+
+		return guardado;
 	}
 
 	// ============================================================
@@ -278,7 +308,7 @@ public class ServicioEspectaculos {
 	 * @return número creado
 	 */
 	@Transactional
-	public Numero crearNumero(Integer idEspectaculo, int orden, String nombre, double duracion) {
+	public Numero crearNumero(Integer idEspectaculo, int orden, String nombre, double duracion, String usuarioActual) {
 
 		Espectaculo esp = espectaculoRepository.findById(idEspectaculo)
 				.orElseThrow(() -> new IllegalArgumentException("Espectaculo no encontrado"));
@@ -290,6 +320,10 @@ public class ServicioEspectaculos {
 		esp.addNumero(n);
 
 		espectaculoRepository.save(esp);
+
+		// LOG
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.NUEVO,
+				"Creado Numero id " + n.getId() + " en Espectaculo id " + idEspectaculo);
 
 		return n;
 	}
@@ -306,11 +340,19 @@ public class ServicioEspectaculos {
 	 * @param duracion nueva duración
 	 * @return número actualizado
 	 */
-	public Numero actualizarNumero(Numero n, int orden, String nombre, double duracion) {
+	public Numero actualizarNumero(Numero n, int orden, String nombre, double duracion, String usuarioActual) {
+
 		n.setOrden(orden);
 		n.setNombre(nombre);
 		n.setDuracion(duracion);
-		return numeroRepository.save(n);
+
+		Numero guardado = numeroRepository.save(n);
+
+		// LOG
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.ACTUALIZACION,
+				"Actualizado Numero id " + n.getId());
+
+		return guardado;
 	}
 
 	/**
@@ -322,7 +364,7 @@ public class ServicioEspectaculos {
 	 * @param idNumero identificador del número
 	 */
 	@Transactional
-	public void borrarNumero(Integer idNumero) {
+	public void borrarNumero(Integer idNumero, String usuarioActual) {
 
 		Numero num = numeroRepository.findById(idNumero)
 				.orElseThrow(() -> new IllegalArgumentException("Numero no encontrado"));
@@ -330,17 +372,18 @@ public class ServicioEspectaculos {
 		Espectaculo esp = espectaculoRepository.findById(num.getEspectaculo().getId())
 				.orElseThrow(() -> new IllegalArgumentException("Espectaculo no encontrado"));
 
-		// Fuerza carga de números
 		esp.getNumeros().size();
 		esp.getNumeros().remove(num);
 
 		numeroRepository.delete(num);
 
-		// Reordenar
 		int orden = 1;
 		for (Numero n : esp.getNumeros()) {
 			n.setOrden(orden++);
 		}
+
+		// LOG
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.BORRADO, "Borrado Numero id " + idNumero);
 	}
 
 	// ============================================================
@@ -373,7 +416,7 @@ public class ServicioEspectaculos {
 	 * @param idPersona id de la persona artista
 	 */
 	@Transactional
-	public void anadirArtistaANumero(Integer idNumero, Integer idPersona) {
+	public void anadirArtistaANumero(Integer idNumero, Integer idPersona, String usuarioActual) {
 
 		Numero numero = numeroRepository.findById(idNumero)
 				.orElseThrow(() -> new IllegalArgumentException("Numero no encontrado"));
@@ -387,8 +430,11 @@ public class ServicioEspectaculos {
 			throw new IllegalArgumentException("La persona no es artista");
 
 		numero.getArtistas().add(artista);
-
 		numeroRepository.save(numero);
+
+		// LOG
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.ACTUALIZACION,
+				"Añadido Artista id " + idPersona + " al Numero id " + idNumero);
 	}
 
 	/**
@@ -398,7 +444,7 @@ public class ServicioEspectaculos {
 	 * @param idPersona id de la persona artista
 	 */
 	@Transactional
-	public void quitarArtistaDeNumero(Integer idNumero, Integer idPersona) {
+	public void quitarArtistaDeNumero(Integer idNumero, Integer idPersona, String usuarioActual) {
 
 		Numero numero = numeroRepository.findById(idNumero)
 				.orElseThrow(() -> new IllegalArgumentException("Numero no encontrado"));
@@ -412,8 +458,11 @@ public class ServicioEspectaculos {
 			throw new IllegalArgumentException("La persona no es artista");
 
 		numero.getArtistas().remove(artista);
-
 		numeroRepository.save(numero);
+
+		// LOG
+		servicioLog.registrarOperacion(usuarioActual, TipoOperacion.ACTUALIZACION,
+				"Quitado Artista id " + idPersona + " del Numero id " + idNumero);
 	}
 
 	// ============================================================

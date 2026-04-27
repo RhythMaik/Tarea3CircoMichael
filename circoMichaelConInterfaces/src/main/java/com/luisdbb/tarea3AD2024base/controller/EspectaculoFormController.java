@@ -182,7 +182,7 @@ public class EspectaculoFormController implements Initializable {
 						return;
 					}
 
-					servicioEspectaculos.crearEspectaculo(nombre, inicio, fin, p);
+					servicioEspectaculos.crearEspectaculo(nombre, inicio, fin, p, sesion.getNombrePersona());
 				}
 				// ADMIN → selecciona coordinador
 				else {
@@ -192,19 +192,22 @@ public class EspectaculoFormController implements Initializable {
 						return;
 					}
 
-					servicioEspectaculos.crearEspectaculo(nombre, inicio, fin, coord);
+					servicioEspectaculos.crearEspectaculo(nombre, inicio, fin, coord, sesion.getNombrePersona());
 				}
 			}
 
 			// EDITAR
 			else {
-				servicioEspectaculos.actualizarNombre(espectaculoEnEdicion, nombre);
-				servicioEspectaculos.actualizarFechas(espectaculoEnEdicion, inicio, fin);
+
+				servicioEspectaculos.actualizarNombre(espectaculoEnEdicion, nombre, sesion.getNombrePersona());
+
+				servicioEspectaculos.actualizarFechas(espectaculoEnEdicion, inicio, fin, sesion.getNombrePersona());
 
 				// ADMIN puede cambiar coordinador
 				if (sesion.getPerfil() != Perfiles.COORDINACION) {
 					Persona coord = cbCoordinador.getValue();
-					servicioEspectaculos.actualizarCoordinador(espectaculoEnEdicion, coord.getId());
+					servicioEspectaculos.actualizarCoordinador(espectaculoEnEdicion, coord.getId(),
+							sesion.getNombrePersona());
 				}
 			}
 

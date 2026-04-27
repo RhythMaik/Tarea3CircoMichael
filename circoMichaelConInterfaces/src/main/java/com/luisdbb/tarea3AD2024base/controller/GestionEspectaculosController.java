@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.luisdbb.tarea3AD2024base.modelo.Espectaculo;
+import com.luisdbb.tarea3AD2024base.modelo.Sesion;
 import com.luisdbb.tarea3AD2024base.services.ServicioEspectaculos;
 import com.luisdbb.tarea3AD2024base.services.ServicioNavegacion;
 import com.luisdbb.tarea3AD2024base.view.FxmlView;
@@ -46,6 +47,9 @@ import javafx.stage.FileChooser;
 public class GestionEspectaculosController implements Initializable {
 
 	@Autowired
+	private Sesion sesion;
+
+	@Autowired
 	private ServicioEspectaculos servicioEspectaculos;
 
 	@Autowired
@@ -74,8 +78,7 @@ public class GestionEspectaculosController implements Initializable {
 	private List<Espectaculo> listaCompleta;
 
 	// Lista observable filtrada
-	private ObservableList<Espectaculo> listaFiltrada = FXCollections
-			.observableArrayList();
+	private ObservableList<Espectaculo> listaFiltrada = FXCollections.observableArrayList();
 
 	/**
 	 * Inicializa la vista configurando la tabla y cargando los espectáculos.
@@ -85,8 +88,10 @@ public class GestionEspectaculosController implements Initializable {
 		configurarTabla();
 		cargarEspectaculos();
 	}
+
 	/**
 	 * Metodo auxiliar para validar que los espectaculos tengan un minimo de 3
+	 * 
 	 * @param espectaculo
 	 * @return falso o true dependiendo de si cumple la condicion
 	 */
@@ -104,29 +109,26 @@ public class GestionEspectaculosController implements Initializable {
 	private void configurarTabla() {
 		colId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-		colInicio
-				.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
+		colInicio.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
 		colFin.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
-		colValidacion.setCellValueFactory(
-				param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		colValidacion.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 
-		colValidacion.setCellFactory(
-				col -> new TableCell<Espectaculo, Espectaculo>() {
-					@Override
-					protected void updateItem(Espectaculo espec, boolean empty) {
-						super.updateItem(espec, empty);
+		colValidacion.setCellFactory(col -> new TableCell<Espectaculo, Espectaculo>() {
+			@Override
+			protected void updateItem(Espectaculo espec, boolean empty) {
+				super.updateItem(espec, empty);
 
-						if (empty || espec == null) {
-							setText(null);
-							return;
-						}
+				if (empty || espec == null) {
+					setText(null);
+					return;
+				}
 
-						boolean ok = validarEspectaculo(espec);
+				boolean ok = validarEspectaculo(espec);
 
-						setText(ok ? "V" : "X");
-						setStyle("-fx-font-size: 20px; -fx-alignment: CENTER;");
-					}
-				});
+				setText(ok ? "V" : "X");
+				setStyle("-fx-font-size: 20px; -fx-alignment: CENTER;");
+			}
+		});
 
 	}
 
@@ -134,11 +136,10 @@ public class GestionEspectaculosController implements Initializable {
 	 * Carga todos los espectáculos desde la base de datos.
 	 */
 	private void cargarEspectaculos() {
-	    listaCompleta = servicioEspectaculos.findAll();
-	    listaFiltrada.setAll(listaCompleta);
-	    tablaEspectaculos.setItems(listaFiltrada);
+		listaCompleta = servicioEspectaculos.findAll();
+		listaFiltrada.setAll(listaCompleta);
+		tablaEspectaculos.setItems(listaFiltrada);
 	}
-
 
 	// ============================================================
 	// FILTROS
@@ -181,8 +182,7 @@ public class GestionEspectaculosController implements Initializable {
 		listaFiltrada.setAll(listaCompleta.stream()
 
 				// Filtro por texto
-				.filter(e -> texto.isEmpty()
-						|| e.getNombre().toLowerCase().contains(texto))
+				.filter(e -> texto.isEmpty() || e.getNombre().toLowerCase().contains(texto))
 
 				// Filtro por fecha comprendida entre inicio y fin
 				.filter(e -> {
@@ -209,8 +209,7 @@ public class GestionEspectaculosController implements Initializable {
 	 * @return espectáculo seleccionado o null si no hay selección
 	 */
 	private Espectaculo getSeleccionado() {
-		Espectaculo esp = tablaEspectaculos.getSelectionModel()
-				.getSelectedItem();
+		Espectaculo esp = tablaEspectaculos.getSelectionModel().getSelectedItem();
 		if (esp == null) {
 			mostrarError("Selecciona un espectáculo.");
 		}
@@ -227,8 +226,8 @@ public class GestionEspectaculosController implements Initializable {
 	}
 
 	/**
-	 * Acción del botón "Editar". Abre el formulario con los datos del
-	 * espectáculo seleccionado.
+	 * Acción del botón "Editar". Abre el formulario con los datos del espectáculo
+	 * seleccionado.
 	 */
 	@FXML
 	private void onEditar() {
@@ -249,16 +248,15 @@ public class GestionEspectaculosController implements Initializable {
 		if (esp == null)
 			return;
 
-		servicioEspectaculos.delete(esp.getId());
+		servicioEspectaculos.delete(esp.getId(), sesion.getNombrePersona());
 		cargarEspectaculos();
 
-		mostrarInfo("Eliminado",
-				"El espectáculo ha sido eliminado correctamente.");
+		mostrarInfo("Eliminado", "El espectáculo ha sido eliminado correctamente.");
 	}
 
 	/**
-	 * Acción del botón "Ver detalle". Abre la pantalla de detalle del
-	 * espectáculo seleccionado.
+	 * Acción del botón "Ver detalle". Abre la pantalla de detalle del espectáculo
+	 * seleccionado.
 	 */
 	@FXML
 	private void onVerDetalle() {
@@ -271,8 +269,8 @@ public class GestionEspectaculosController implements Initializable {
 	}
 
 	/**
-	 * Acción del botón "Gestionar números". Abre la pantalla de gestión de
-	 * números del espectáculo seleccionado.
+	 * Acción del botón "Gestionar números". Abre la pantalla de gestión de números
+	 * del espectáculo seleccionado.
 	 */
 	@FXML
 	private void onGestionarNumeros() {
@@ -304,8 +302,7 @@ public class GestionEspectaculosController implements Initializable {
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setHeaderText("Exportar espectáculos");
-		alert.setContentText(
-				"¿Deseas exportar todos los espectáculos en formato JSON?");
+		alert.setContentText("¿Deseas exportar todos los espectáculos en formato JSON?");
 
 		if (alert.showAndWait().get() != ButtonType.OK) {
 			return;
@@ -313,8 +310,7 @@ public class GestionEspectaculosController implements Initializable {
 
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Guardar espectáculos");
-		fileChooser.getExtensionFilters()
-				.add(new FileChooser.ExtensionFilter("Archivo JSON", "*.json"));
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivo JSON", "*.json"));
 		fileChooser.setInitialFileName("espectaculos.json");
 
 		File destino = fileChooser.showSaveDialog(null);
@@ -325,11 +321,9 @@ public class GestionEspectaculosController implements Initializable {
 
 		try {
 			servicioEspectaculos.exportarEspectaculosJSON(destino);
-			mostrarInfo("Exportado",
-					"Los espectáculos se han exportado correctamente.");
+			mostrarInfo("Exportado", "Los espectáculos se han exportado correctamente.");
 		} catch (Exception e) {
-			mostrarError(
-					"No se pudo exportar los espectáculos: " + e.getMessage());
+			mostrarError("No se pudo exportar los espectáculos: " + e.getMessage());
 		}
 	}
 
@@ -368,20 +362,19 @@ public class GestionEspectaculosController implements Initializable {
 	private void onAyuda() {
 		Alert a = new Alert(Alert.AlertType.INFORMATION);
 		a.setHeaderText("Ayuda – Gestión de Espectáculos");
-		a.setContentText(
-				"""
-						En esta pantalla puedes realizar las siguientes acciones:
+		a.setContentText("""
+				En esta pantalla puedes realizar las siguientes acciones:
 
-						• Crear un nuevo espectáculo
-						• Editar el espectáculo seleccionado
-						• Eliminarlo
-						• Ver su detalle completo
-						• Gestionar sus números
-						• Filtrar por nombre o por fecha
-						• Exportar todos los espectáculos en formato JSON
+				• Crear un nuevo espectáculo
+				• Editar el espectáculo seleccionado
+				• Eliminarlo
+				• Ver su detalle completo
+				• Gestionar sus números
+				• Filtrar por nombre o por fecha
+				• Exportar todos los espectáculos en formato JSON
 
-						Recuerda seleccionar un espectáculo antes de editar, eliminar, ver detalle o gestionar números.
-						""");
+				Recuerda seleccionar un espectáculo antes de editar, eliminar, ver detalle o gestionar números.
+				""");
 		a.showAndWait();
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import com.luisdbb.tarea3AD2024base.modelo.Artista;
 import com.luisdbb.tarea3AD2024base.modelo.Numero;
 import com.luisdbb.tarea3AD2024base.modelo.Persona;
+import com.luisdbb.tarea3AD2024base.modelo.Sesion;
 import com.luisdbb.tarea3AD2024base.services.ServicioEspectaculos;
 import com.luisdbb.tarea3AD2024base.services.ServicioPersonas;
 import com.luisdbb.tarea3AD2024base.services.ServicioNavegacion;
@@ -31,12 +32,15 @@ import javafx.scene.control.ListView;
  * Utiliza ServicioEspectaculos para modificar las asignaciones y
  * ServicioPersonas para obtener la lista completa de artistas disponibles.
  *
- * @autor: MichaelQP 
+ * @autor: MichaelQP
  * @version 1.1
  * @since 2026
  */
 @Controller
 public class GestionArtistasNumeroController implements Initializable {
+
+	@Autowired
+	private Sesion sesion;
 
 	/**
 	 * Servicio para gestionar espectáculos y asignaciones de artistas.
@@ -104,7 +108,8 @@ public class GestionArtistasNumeroController implements Initializable {
 		if (p == null)
 			return;
 
-		servicioEspectaculos.anadirArtistaANumero(numeroActual.getId(), p.getId());
+		servicioEspectaculos.anadirArtistaANumero(numeroActual.getId(), p.getId(), sesion.getNombrePersona());
+
 		cargarListas();
 	}
 
@@ -119,7 +124,8 @@ public class GestionArtistasNumeroController implements Initializable {
 		if (p == null)
 			return;
 
-		servicioEspectaculos.quitarArtistaDeNumero(numeroActual.getId(), p.getId());
+		servicioEspectaculos.quitarArtistaDeNumero(numeroActual.getId(), p.getId(), sesion.getNombrePersona());
+
 		cargarListas();
 	}
 

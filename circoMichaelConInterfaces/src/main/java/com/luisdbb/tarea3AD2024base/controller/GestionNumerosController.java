@@ -25,6 +25,7 @@ import org.springframework.stereotype.Controller;
 
 import com.luisdbb.tarea3AD2024base.modelo.Espectaculo;
 import com.luisdbb.tarea3AD2024base.modelo.Numero;
+import com.luisdbb.tarea3AD2024base.modelo.Sesion;
 import com.luisdbb.tarea3AD2024base.services.ServicioEspectaculos;
 import com.luisdbb.tarea3AD2024base.services.ServicioNavegacion;
 import com.luisdbb.tarea3AD2024base.view.FxmlView;
@@ -40,6 +41,9 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 @Controller
 public class GestionNumerosController implements Initializable {
 
+	@Autowired
+	private Sesion sesion;
+
 	/**
 	 * Servicio para gestionar espectáculos y sus números.
 	 */
@@ -53,8 +57,8 @@ public class GestionNumerosController implements Initializable {
 	private ServicioNavegacion navigation;
 
 	/**
-	 * Espectáculo actualmente seleccionado para gestionar sus números. Se
-	 * establece desde el controlador anterior.
+	 * Espectáculo actualmente seleccionado para gestionar sus números. Se establece
+	 * desde el controlador anterior.
 	 */
 	public static Espectaculo espectaculoActual;
 
@@ -87,20 +91,21 @@ public class GestionNumerosController implements Initializable {
 			lblTitulo.setText("Números de: " + espectaculoActual.getNombre());
 		}
 	}
+
 	/**
 	 * Metodo auxiliar para validar si un numero tiene un minimo de un artista
+	 * 
 	 * @param numero
 	 * @return
 	 */
 	private boolean validarNumero(Numero numero) {
-	    // Solo valida si tiene 1 o más artistas
-	    return numero.getArtistas() != null && !numero.getArtistas().isEmpty();
+		// Solo valida si tiene 1 o más artistas
+		return numero.getArtistas() != null && !numero.getArtistas().isEmpty();
 	}
 
-
 	/**
-	 * Configura las columnas de la tabla de números. Incluye una columna
-	 * calculada para mostrar los artistas asignados.
+	 * Configura las columnas de la tabla de números. Incluye una columna calculada
+	 * para mostrar los artistas asignados.
 	 */
 	private void configurarTabla() {
 		colOrden.setCellValueFactory(new PropertyValueFactory<>("orden"));
@@ -110,14 +115,12 @@ public class GestionNumerosController implements Initializable {
 		colArtistas.setCellValueFactory(c -> {
 			Numero n = c.getValue();
 
-			String nombres = n.getArtistas().stream()
-					.map(a -> a.getPersona().getNombre()).sorted()
+			String nombres = n.getArtistas().stream().map(a -> a.getPersona().getNombre()).sorted()
 					.reduce((a, b) -> a + ", " + b).orElse("");
 
 			return new ReadOnlyStringWrapper(nombres);
 		});
-		colValidacion.setCellValueFactory(
-				param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		colValidacion.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 
 		colValidacion.setCellFactory(col -> new TableCell<Numero, Numero>() {
 			@Override
@@ -142,8 +145,8 @@ public class GestionNumerosController implements Initializable {
 	 * Carga los números del espectáculo actual en la tabla.
 	 */
 	private void cargarNumeros() {
-		tablaNumeros.setItems(FXCollections.observableArrayList(
-				servicioEspectaculos.obtenerNumeros(espectaculoActual)));
+		tablaNumeros
+				.setItems(FXCollections.observableArrayList(servicioEspectaculos.obtenerNumeros(espectaculoActual)));
 	}
 
 	/**
@@ -206,7 +209,8 @@ public class GestionNumerosController implements Initializable {
 		if (n == null)
 			return;
 
-		servicioEspectaculos.borrarNumero(n.getId());
+		servicioEspectaculos.borrarNumero(n.getId(), sesion.getNombrePersona());
+
 		cargarNumeros();
 		mostrarInfo("Número eliminado correctamente.");
 	}
@@ -216,8 +220,8 @@ public class GestionNumerosController implements Initializable {
 	// ============================================================
 
 	/**
-	 * Acción del botón "Gestionar Artistas". Abre la pantalla para asignar o
-	 * quitar artistas del número seleccionado.
+	 * Acción del botón "Gestionar Artistas". Abre la pantalla para asignar o quitar
+	 * artistas del número seleccionado.
 	 */
 	@FXML
 	private void onGestionarArtistas() {
@@ -234,8 +238,7 @@ public class GestionNumerosController implements Initializable {
 	// ============================================================
 
 	/**
-	 * Acción del botón "Volver". Regresa a la pantalla de gestión de
-	 * espectáculos.
+	 * Acción del botón "Volver". Regresa a la pantalla de gestión de espectáculos.
 	 */
 	@FXML
 	private void onVolver() {
@@ -281,20 +284,19 @@ public class GestionNumerosController implements Initializable {
 	private void onAyuda() {
 		Alert a = new Alert(Alert.AlertType.INFORMATION);
 		a.setHeaderText("Ayuda – Gestión de Números");
-		a.setContentText(
-				"""
-						En esta pantalla puedes gestionar los números del espectáculo seleccionado.
+		a.setContentText("""
+				En esta pantalla puedes gestionar los números del espectáculo seleccionado.
 
-						Acciones disponibles:
+				Acciones disponibles:
 
-						• Crear un número nuevo dentro del espectáculo
-						• Editar el número seleccionado
-						• Eliminar un número (los restantes se reordenan automáticamente)
-						• Ver los artistas asignados a cada número
-						• Acceder a la pantalla para añadir o quitar artistas
+				• Crear un número nuevo dentro del espectáculo
+				• Editar el número seleccionado
+				• Eliminar un número (los restantes se reordenan automáticamente)
+				• Ver los artistas asignados a cada número
+				• Acceder a la pantalla para añadir o quitar artistas
 
-						Recuerda seleccionar un número antes de editarlo, eliminarlo o gestionar sus artistas.
-						""");
+				Recuerda seleccionar un número antes de editarlo, eliminarlo o gestionar sus artistas.
+				""");
 		a.showAndWait();
 	}
 }

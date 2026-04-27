@@ -31,6 +31,7 @@ import org.springframework.stereotype.Controller;
 
 import com.luisdbb.tarea3AD2024base.modelo.Espectaculo;
 import com.luisdbb.tarea3AD2024base.modelo.Numero;
+import com.luisdbb.tarea3AD2024base.modelo.Sesion;
 import com.luisdbb.tarea3AD2024base.services.ServicioEspectaculos;
 import com.luisdbb.tarea3AD2024base.services.ServicioNavegacion;
 import com.luisdbb.tarea3AD2024base.view.FxmlView;
@@ -43,6 +44,9 @@ import javafx.scene.control.TextField;
 
 @Controller
 public class NumeroFormController implements Initializable {
+
+	@Autowired
+	private Sesion sesion;
 
 	/**
 	 * Servicio para gestionar espectáculos y sus números.
@@ -169,9 +173,11 @@ public class NumeroFormController implements Initializable {
 
 		try {
 			if (numeroEnEdicion == null) {
-				servicioEspectaculos.crearNumero(espectaculoPadre.getId(), orden, nombre, duracion);
+				servicioEspectaculos.crearNumero(espectaculoPadre.getId(), orden, nombre, duracion,
+						sesion.getNombrePersona());
 			} else {
-				servicioEspectaculos.actualizarNumero(numeroEnEdicion, orden, nombre, duracion);
+				servicioEspectaculos.actualizarNumero(numeroEnEdicion, orden, nombre, duracion,
+						sesion.getNombrePersona());
 			}
 
 		} catch (Exception e) {

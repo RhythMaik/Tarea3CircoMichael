@@ -338,7 +338,7 @@ public class Menus {
 		}
 
 		try {
-			servicioEspectaculos.crearEspectaculo(nombre, ini, fin, coord);
+			// servicioEspectaculos.crearEspectaculo(nombre, ini, fin, coord);
 			System.out.println("Espectaculo creado.");
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
@@ -397,7 +397,7 @@ public class Menus {
 			case 1:
 				System.out.print("Nuevo nombre: ");
 				String nuevoNombre = leer.nextLine();
-				servicioEspectaculos.actualizarNombre(esp, nuevoNombre);
+				// servicioEspectaculos.actualizarNombre(esp, nuevoNombre);
 				System.out.println("Nombre actualizado.");
 				break;
 
@@ -406,7 +406,7 @@ public class Menus {
 				LocalDate ini = LocalDate.parse(leer.nextLine());
 				System.out.print("Nueva fecha fin (YYYY-MM-DD): ");
 				LocalDate fin = LocalDate.parse(leer.nextLine());
-				servicioEspectaculos.actualizarFechas(esp, ini, fin);
+				// servicioEspectaculos.actualizarFechas(esp, ini, fin);
 				System.out.println("Fechas actualizadas.");
 				break;
 
@@ -444,7 +444,7 @@ public class Menus {
 				int idCoord = leer.nextInt();
 				leer.nextLine();
 
-				servicioEspectaculos.actualizarCoordinador(esp, idCoord);
+				// servicioEspectaculos.actualizarCoordinador(esp, idCoord);
 				System.out.println("Coordinador actualizado.");
 				break;
 
@@ -573,7 +573,7 @@ public class Menus {
 		double dur = leer.nextDouble();
 		leer.nextLine();
 
-		servicioEspectaculos.crearNumero(esp.getId(), orden, nombre, dur);
+		// servicioEspectaculos.crearNumero(esp.getId(), orden, nombre, dur);
 
 		System.out.println("Numero creado.");
 	}
@@ -607,7 +607,7 @@ public class Menus {
 		double dur = leer.nextDouble();
 		leer.nextLine();
 
-		servicioEspectaculos.actualizarNumero(n, orden, nombre, dur);
+		// servicioEspectaculos.actualizarNumero(n, orden, nombre, dur);
 
 		System.out.println("Numero actualizado.");
 	}
@@ -630,7 +630,7 @@ public class Menus {
 			return;
 		}
 
-		servicioEspectaculos.borrarNumero(n.getId());
+		// servicioEspectaculos.borrarNumero(n.getId());
 
 		System.out.println("Numero borrado.");
 	}
@@ -727,7 +727,7 @@ public class Menus {
 		leer.nextLine();
 
 		try {
-			servicioEspectaculos.anadirArtistaANumero(numero.getId(), id);
+			// servicioEspectaculos.anadirArtistaANumero(numero.getId(), id);
 			System.out.println("Artista anadido.");
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
@@ -759,7 +759,7 @@ public class Menus {
 		leer.nextLine();
 
 		try {
-			servicioEspectaculos.quitarArtistaDeNumero(numero.getId(), id);
+			// servicioEspectaculos.quitarArtistaDeNumero(numero.getId(), id);
 			System.out.println("Artista eliminado del numero.");
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
@@ -826,8 +826,7 @@ public class Menus {
 
 		try {
 			servicioPersonas.registrarPersona(nombre, email, nacionalidad, usuario, contrasenia, perfil, senior,
-					fechaSenior, apodo, especialidades, sesion.getNombrePersona()
-			);
+					fechaSenior, apodo, especialidades, sesion.getNombrePersona());
 
 			System.out.println("Persona registrada correctamente.");
 
