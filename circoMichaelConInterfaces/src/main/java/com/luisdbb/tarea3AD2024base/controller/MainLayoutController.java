@@ -206,6 +206,12 @@ public class MainLayoutController {
 	private void goLogs() {
 		cargarPantalla(FxmlView.LOGS.getFxmlFile());
 	}
+	
+	@FXML
+	private void goRegistrarIncidencia() {
+	    cargarPantalla(FxmlView.REGISTRAR_INCIDENCIA.getFxmlFile());
+	}
+
 
 	/**
 	 * Cierra la sesión y vuelve a la pantalla pública.

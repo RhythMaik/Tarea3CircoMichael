@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20"
+      styleClass="form-box"
+      stylesheets="@../styles/Styles.css"
+      xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.luisdbb.tarea3AD2024base.controller.RegistrarIncidenciaController">
+
+    <Label text="🛠 Registrar Nueva Incidencia" styleClass="form-title"/>
+
+    <VBox spacing="10">
+
+        <Label text="Tipo de incidencia:" styleClass="form-label"/>
+        <ComboBox fx:id="cbTipo" promptText="Selecciona tipo..." />
+
+        <Label text="Descripción:" styleClass="form-label"/>
+        <TextArea fx:id="txtDescripcion"
+                  promptText="Describe la incidencia..."
+                  prefRowCount="5"
+                  wrapText="true"/>
+
+        <Label text="Espectáculo afectado (opcional):" styleClass="form-label"/>
+        <ComboBox fx:id="cbEspectaculo" promptText="Selecciona espectáculo..."/>
+
+        <Label text="Número afectado (opcional):" styleClass="form-label"/>
+        <ComboBox fx:id="cbNumero" promptText="Selecciona número..."/>
+    </VBox>
+
+    <HBox spacing="10">
+        <Button text="Registrar" styleClass="action-button" onAction="#onRegistrar"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="↩ Volver" styleClass="cancel-button" onAction="#onVolver"/>
+    </HBox>
+
+</VBox>

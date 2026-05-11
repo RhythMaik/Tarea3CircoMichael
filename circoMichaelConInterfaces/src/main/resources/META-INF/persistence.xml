@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             version="3.0">
+
+    <persistence-unit name="objectdb-pu">
+        <provider>com.objectdb.jpa.Provider</provider>
+
+        <class>com.luisdbb.tarea3AD2024base.modelo.Incidencia</class>
+        <class>com.luisdbb.tarea3AD2024base.modelo.ResolucionIncidencia</class>
+
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="objectdb://localhost:6136/incidencias.odb"/>
+            <property name="javax.persistence.jdbc.user" value="admin"/>
+            <property name="javax.persistence.jdbc.password" value="admin"/>
+
+            <property name="objectdb.temp.no-detach" value="true"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

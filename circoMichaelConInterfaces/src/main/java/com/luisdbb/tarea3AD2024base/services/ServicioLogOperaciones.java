@@ -77,17 +77,16 @@ public class ServicioLogOperaciones {
 		ObjectContainer db = null;
 
 		try {
-			// Abrir conexión con DB4O
+			// Abrir conexion con DB4O
 			db = db40Manager.open();
 
-			// Crear objeto original con tipos Java modernos
 			LogOperacion log = new LogOperacion();
 			log.setFechaHora(LocalDateTime.now());
 			log.setUsuario(usuario);
 			log.setTipoOperacion(tipo);
 			log.setResumen(resumen);
 
-			// DB4O no soporta LocalDateTime ni Enum, así que convertimos a String
+			// DB4O no soporta LocalDateTime ni Enum, asi que convertimos a String
 			LogOperacionDB4O logDB = new LogOperacionDB4O(log.getFechaHora().format(FORMATTER), // fecha como String
 					log.getUsuario(), log.getTipoOperacion().name(), // enum como String
 					log.getResumen());

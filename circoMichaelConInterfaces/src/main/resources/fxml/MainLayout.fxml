@@ -20,39 +20,50 @@
     </top>
     <left>
         <VBox fx:id="menuLateral" prefWidth="211" spacing="15" styleClass="menu-box">
-            <Button fx:id="btnPersonas"
-                    onAction="#goPersonas"
-                    prefHeight="47" prefWidth="155"
-                    styleClass="menu-button"
-                    text="👥 Personas"/>
-            <Button fx:id="btnEspectaculos"
-                    onAction="#goEspectaculos"
-                    prefHeight="47" prefWidth="155"
-                    styleClass="menu-button"
-                    text="🎪 Espectáculos"/>
-            <Button fx:id="btnVerEspectaculos"
-                    onAction="#goVerEspectaculos"
-                    prefHeight="47" prefWidth="155"
-                    styleClass="menu-button"
-                    text="👁 Espectáculos"
-                    visible="false" managed="false"/>
 
-            <Button fx:id="btnFichaArtista"
-                    onAction="#goFichaArtista"
-                    prefHeight="47" prefWidth="155"
-                    styleClass="menu-button"
-                    text="🎭 Mi Ficha"
-                    visible="false" managed="false"/>
-            <Button fx:id="btnLogs"
-			        text="📜 Ver Logs"
-			        styleClass="menu-button"
-			        onAction="#goLogs" />
-            <Button onAction="#logout"
-                    prefHeight="39" prefWidth="155"
-                    styleClass="cancel-button"
-                    text="🚪 Cerrar Sesión" />
+		    <Button fx:id="btnPersonas"
+		            onAction="#goPersonas"
+		            prefHeight="47" prefWidth="155"
+		            styleClass="menu-button"
+		            text="👥 Personas"/>
+		
+		    <Button fx:id="btnEspectaculos"
+		            onAction="#goEspectaculos"
+		            prefHeight="47" prefWidth="155"
+		            styleClass="menu-button"
+		            text="🎪 Espectáculos"/>
+		
+		    <Button fx:id="btnVerEspectaculos"
+		            onAction="#goVerEspectaculos"
+		            prefHeight="47" prefWidth="155"
+		            styleClass="menu-button"
+		            text="👁 Espectáculos"
+		            visible="false" managed="false"/>
+		
+		    <Button fx:id="btnFichaArtista"
+		            onAction="#goFichaArtista"
+		            prefHeight="47" prefWidth="155"
+		            styleClass="menu-button"
+		            text="🎭 Mi Ficha"
+		            visible="false" managed="false"/>
+		
+		    <Button fx:id="btnLogs"
+		            text="📜 Ver Logs"
+		            styleClass="menu-button"
+		            onAction="#goLogs" />
+		
+		    <Button fx:id="btnRegistrarIncidencia"
+		            text="➕ Registrar Incidencia"
+		            styleClass="menu-button"
+		            onAction="#goRegistrarIncidencia" />
+		
+		    <Button onAction="#logout"
+		            prefHeight="39" prefWidth="155"
+		            styleClass="cancel-button"
+		            text="🚪 Cerrar Sesión" />
+		
+		</VBox>
 
-        </VBox>
     </left>
     <center>
         <StackPane fx:id="contenedorPantallas" styleClass="content-wrapper" />

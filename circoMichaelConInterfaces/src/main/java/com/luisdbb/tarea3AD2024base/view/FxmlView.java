@@ -225,6 +225,17 @@ public enum FxmlView {
 		public String getFxmlFile() {
 			return "/fxml/Logs.fxml";
 		}
+	},
+	REGISTRAR_INCIDENCIA {
+		@Override
+		public String getTitle() {
+			return "Registrar Incidencia";
+		}
+
+		@Override
+		public String getFxmlFile() {
+			return "/fxml/RegistrarIncidencia.fxml";
+		}
 	};
 
 	/**
